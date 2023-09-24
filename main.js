@@ -90,6 +90,16 @@ document.addEventListener("DOMContentLoaded", function(){
     return -1;
   }
 
+  const cancelledEdit = (id) => {
+    document.getElementById(id).style.display = "flex";
+    Swal.fire({
+      icon: "error",
+      title: "Perubahan dibatalkan!",
+      showConfirmButton: false,
+      timer: 1500
+    });
+  };
+
   function addBook(){
     const bookTitle = document.getElementById("inputBookTitle").value;
     const bookAuthor = document.getElementById("inputBookAuthor").value;
@@ -226,44 +236,40 @@ document.addEventListener("DOMContentLoaded", function(){
             }).then((result) => {
               if(result.value){
                 editedYear = result.value;
-                books[bookEditIndex].title = editedTitle;
-                books[bookEditIndex].author = editedAuthor;
-                books[bookEditIndex].year = editedYear;
-                saveDataToStorage();
                 Swal.fire({
-                  icon: "success",
-                  title: "Perubahan berhasil disimpan!",
-                  showConfirmButton: false,
-                  timer: 1500
+                  title: "Apakah Anda yakin dengan perubahan?",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Ya!",
+                  cancelButtonText: "Tidak!"
+                }).then((result) => {
+                  if(result.isConfirmed){
+                    books[bookEditIndex].title = editedTitle;
+                    books[bookEditIndex].author = editedAuthor;
+                    books[bookEditIndex].year = editedYear;
+                    saveDataToStorage();
+                    Swal.fire({
+                      icon: "success",
+                      title: "Perubahan berhasil disimpan!",
+                      showConfirmButton: false,
+                      timer: 1500
+                    });
+                  }else{
+                    cancelledEdit(bookTarget.id);
+                  }
                 });
               }else{
-                document.getElementById(bookTarget.id).style.display = "flex";
-                Swal.fire({
-                  icon: "error",
-                  title: "Perubahan dibatalkan!",
-                  showConfirmButton: false,
-                  timer: 1500
-                });
+                cancelledEdit(bookTarget.id);
               }
             });
           }else{
-            document.getElementById(bookTarget.id).style.display = "flex";
-            Swal.fire({
-              icon: "error",
-              title: "Perubahan dibatalkan!",
-              showConfirmButton: false,
-              timer: 1500
-            });
+            cancelledEdit(bookTarget.id);
           }
         });
       }else{
-        document.getElementById(bookTarget.id).style.display = "flex";
-        Swal.fire({
-          icon: "error",
-          title: "Perubahan dibatalkan!",
-          showConfirmButton: false,
-          timer: 1500
-        });
+        cancelledEdit(bookTarget.id);
       }
     });
   }
