@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function(){
             editedAuthor = result.value;
             Swal.fire({
               title: "Tahun",
-              icon: "question",
+              icon: "info",
               input: "number",
               inputValue: bookTarget.year,
               showDenyButton: true,
