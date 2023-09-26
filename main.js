@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function(){
     return -1;
   }
 
-  const cancelledEdit = (id) => {
+  function cancelledEdit(id){
     document.getElementById(id).style.display = "flex";
     Swal.fire({
       icon: "error",
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function(){
       showConfirmButton: false,
       timer: 1500
     });
-  };
+  }
 
   function addBook(){
     const bookTitle = document.getElementById("inputBookTitle").value;
@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function(){
       inputValue: bookTarget.title,
       showDenyButton: true,
       focusConfirm: false,
-      confirmButtonText: "<i class='fa fa-check'></i> Next!",
+      confirmButtonText: "<i class='fa fa-check'></i> Lanjut!",
       denyButtonText: "<i class='fa fa-close'></i> Batal!"
     }).then((result) => {
       if(result.value){
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function(){
           inputValue: bookTarget.author,
           showDenyButton: true,
           focusConfirm: false,
-          confirmButtonText: "<i class='fa fa-check'></i> Next!",
+          confirmButtonText: "<i class='fa fa-check'></i> Lanjut!",
           denyButtonText: "<i class='fa fa-close'></i> Batal!"
         }).then((result) => {
           if(result.value){
